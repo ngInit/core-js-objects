@@ -437,7 +437,7 @@ describe('objects-tasks', () => {
   );
 
   it.optional(
-    'cssSelectorBuilder should creates css selector object with stringify() method',
+    'cssSelectorBuilder should create css selector object with stringify() method',
     () => {
       const builder = tasks.cssSelectorBuilder;
 
@@ -583,10 +583,10 @@ describe('objects-tasks', () => {
       ].forEach((fn) => {
         assert.throws(
           fn,
-          /Element, id and pseudo-element should not occur more then one time inside the selector/,
+          /Element, id and pseudo-element should not occur more than one time inside the selector/,
 
-          '\nPlease throw an exception "Element, id and pseudo-element should not occur more then one time inside the selector" ' +
-            'if element, id or pseudo-element occurs twice or more times'
+          '\nPlease throw an exception "Element, id and pseudo-element should not occur more than one time inside the selector" ' +
+          'if element, id or pseudo-element occurs twice or more times'
         );
       });
 
@@ -597,7 +597,7 @@ describe('objects-tasks', () => {
       ].forEach((fn) => {
         assert.doesNotThrow(
           fn,
-          /Element, id and pseudo-element should not occur more then one time inside the selector/
+          /Element, id and pseudo-element should not occur more than one time inside the selector/
         );
       });
 
@@ -614,7 +614,7 @@ describe('objects-tasks', () => {
           /Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element/,
 
           '\nPlease throw an exception "Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element" ' +
-            'if selector parts arranged in an invalid order.'
+          'if selector parts arranged in an invalid order.'
         );
       });
     }
