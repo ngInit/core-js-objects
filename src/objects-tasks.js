@@ -348,32 +348,70 @@ function group(array, keySelector, valueSelector) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  build: '',
+  elements: new Map([
+    ['element', 1],
+    ['id', 2],
+    ['class', 3],
+    ['attribute', 4],
+    ['pseudo-class', 5],
+    ['pseudo-element', 6],
+    ['repetition', ['element', 'id', 'pseudo-element']],
+  ]),
+
+  element(value) {
+    return this.create('element', value);
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    return this.create('id', `#${value}`);
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    return this.create('class', `.${value}`);
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    return this.create('attribute', `[${value}]`);
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    return this.create('pseudo-class', `:${value}`);
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    return this.create('pseudo-element', `::${value}`);
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(firstSelector, sign, secondSelector) {
+    const combinedObject = Object.create(this);
+    combinedObject.build = `${firstSelector.build} ${sign} ${secondSelector.build}`;
+    return combinedObject;
+  },
+
+  stringify() {
+    return this.build;
+  },
+
+  create(key, value) {
+    const elementPosition = this.elements.get(key);
+    const repetition = this.elements.get('repetition');
+    if (this.elementPosition > elementPosition) {
+      throw new Error(
+        `Selector parts should be arranged in the following order: ` +
+          `element, id, class, attribute, pseudo-class, pseudo-element`
+      );
+    }
+    if (this.elementPosition === elementPosition && repetition.includes(key)) {
+      throw new Error(
+        `Element, id and pseudo-element should not occur more then ` +
+          `one time inside the selector`
+      );
+    }
+    const resultObject = Object.create(this);
+    resultObject.elementPosition = elementPosition;
+    resultObject.build += value;
+    return resultObject;
   },
 };
 
