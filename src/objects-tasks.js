@@ -404,7 +404,7 @@ const cssSelectorBuilder = {
     }
     if (this.elementPosition === elementPosition && repetition.includes(key)) {
       throw new Error(
-        `Element, id and pseudo-element should not occur more then ` +
+        `Element, id and pseudo-element should not occur more than ` +
           `one time inside the selector`
       );
     }
